@@ -9,7 +9,11 @@
 #import "TabbarController.h"
 
 @interface TabbarController ()
-
+{
+    IBOutlet UIView     *_tabView;
+    NSMutableArray      *_tabButtons;
+    
+}
 @end
 
 @implementation TabbarController
@@ -29,6 +33,31 @@
     // Do any additional setup after loading the view.
     
     self.tabBar.hidden = YES;
+    
+    CGRect rect     = _tabView.frame;
+    rect            = self.tabBar.frame;
+    _tabView.frame   = rect;
+    
+    int sumOfTab = 5;
+    _tabButtons = [ NSMutableArray array];
+    for (int i = 1; i<=sumOfTab; i++) {
+        UIButton *btn   = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        btn.tag         = i;
+        btn.frame       = CGRectMake(320/sumOfTab *(i-1), 5, 320/sumOfTab, 32);
+        [btn addTarget:self action:@selector(btnTabPress:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setTitle:@"Show" forState:UIControlStateNormal];
+        [_tabView addSubview:btn];
+        [_tabButtons addObject:btn];
+    }
+    
+    [self.view addSubview:_tabView];
+}
+
+- (void) btnTabPress:(id) sender {
+    UIButton *btn       = (UIButton *)sender;
+    self.selectedIndex  = btn.tag;
+    
+    
 }
 
 - (IBAction)gotoSelectTab:(id)sender {
@@ -36,7 +65,7 @@
 //    [self.tabBarController setSelectedIndex:2];
     
     
-    self.selectedIndex = arc4random()%3;
+    self.selectedIndex = 0;
     
 }
 
