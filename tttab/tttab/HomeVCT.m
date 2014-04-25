@@ -12,7 +12,7 @@
 {
     HomeTabVCT *_homeTabVCT;
     
-    IBOutlet UIImageView * _barImageView;
+    IBOutlet UIView * _barView;
 }
 @end
 
@@ -34,17 +34,20 @@
    
     _homeTabVCT         = [self.storyboard instantiateViewControllerWithIdentifier:@"HomeTabVCT"];
     CGRect _rect        = _homeTabVCT.view.frame;
-    _rect.origin.y      += _barImageView.frame.size.height;
-    _rect.size.height   -= _barImageView.frame.size.height;
+    _rect.origin.y      += _barView.frame.size.height;
+    _rect.size.height   -= _barView.frame.size.height;
     _homeTabVCT.view.frame = _rect;
     [self.view addSubview:_homeTabVCT.view];
     _homeTabVCT.selectedIndex = 1;
 
-    [self.view  bringSubviewToFront:_barImageView];
+    [self.view  bringSubviewToFront:_barView];
     
 //    NSLog(@"%@",NSStringFromCGRect(_homeTabVCT.view.frame));
 }
-
+- (IBAction)selectTab:(id)sender {
+    UIButton *btn = (UIButton*)sender;
+    _homeTabVCT.selectedIndex = btn.tag;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
